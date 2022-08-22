@@ -1,0 +1,29 @@
+@import './../../generic';
+
+.state-message {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #00cc00;
+  padding: 0 1em 1em 1em;
+}
+
+.mat-table {
+  a, span {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .mat-column-user {
+    flex: none;
+    width: 30%;
+  }
+
+  .mat-column-post {
+    .title {
+      font-weight: bold;
+      font-size: 1.25rem;
+    }
+  }
+}
+
+

@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="col-3">
+    <h1 class="navbar-brand">{{headline}}</h1>
+  </div>
+  <div class="col-5">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <button class="btn btn-link" (click)="goBack()">Go back to Home page</button>
+      </li>
+    </ul>
+  </div>
+  <div class="col-4 navbar-text">{{ welcome }}</div>
+</nav>
+
+<form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-12 col-sm-4"><label>Title:</label></div>
+      <div class="col-12 col-sm-8">
+        <input type="text" id="title" class="form-control" formControlName="title" required />
+      </div>
+    </div>
+
+    <div *ngIf="f.title.invalid && (f.title.dirty || f.title.touched)" class="row">
+      <div class="col-12 offset-sm-4 col-sm-8">
+        <div class="alert alert-danger">
+          <div *ngIf="f.title.errors.required">The title is required!</div>
+          <div *ngIf="f.title.errors.maxlength">The title cannot exceed more that 200 characters!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-12 col-sm-4"><label>Body:</label></div>
+      <div class="col-12 col-sm-8"><textarea id="body" class="form-control" formControlName="body" rows="4" required></textarea></div>
+    </div>
+
+    <div *ngIf="f.body.invalid && (f.body.dirty || f.body.touched)" class="row">
+      <div class="col-12 offset-sm-4 col-sm-8">
+        <div class="alert alert-danger">
+          <div *ngIf="f.body.errors.required">The body is required!</div>
+          <div *ngIf="f.body.errors.maxlength">The body cannot exceed more that 2000 characters!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-12 col-sm-8 offset-sm-4">
+        <div class="row">
+          <div class="col-12 col-sm-6" *ngIf="mode === 'edit'">
+            <button type="button" class="btn btn-danger" (click)="onDelete()">Delete</button>
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="row">
+              <div class="col-6">
+                <button type="submit" class="btn btn-primary w-100" [disabled]="hasErrors()">Save</button>
+              </div>
+              <div class="col-6">
+                <button type="reset" class="btn btn-secondary w-100">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>

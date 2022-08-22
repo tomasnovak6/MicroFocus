@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="col-3">
+    <h1 class="navbar-brand">Home</h1>
+  </div>
+  <div class="col-4 offset-2 navbar-text">{{ welcome }}</div>
+  <div class="col-3">
+    <ul class="navbar-nav">
+      <li class="nav-item"  *ngIf="isLoggedIn()"><a [routerLink]="['detail', 0, 'new']" title="New Post" class="btn btn-primary">New Post</a></li>
+
+      <ng-container
+        *ngIf="isLoggedIn(); then loggedIn; else loggedOut">
+      </ng-container>
+      <ng-template #loggedIn>
+        <li class="nav-item" (click)="logOut()"><button class="btn btn-secondary">Log Out</button></li>
+      </ng-template>
+      <ng-template #loggedOut>
+        <li class="nav-item"><a [routerLink]="['login']" class="btn btn-primary" title="Log In">Log In</a></li>
+      </ng-template>
+
+    </ul>
+  </div>
+</nav>
+
+<div class="row state-message">{{stateMessage}}</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- User Column -->
+    <ng-container matColumnDef="user">
+      <th mat-header-cell *matHeaderCellDef> User </th>
+      <td mat-cell *matCellDef="let element">
+        <div class="row">{{element.userName}}</div>
+        <div class="row mt-2">
+          <a href="{{element.website}}" title="{{element.userCompany}}" target="_blank">{{element.userCompany}}</a>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Post Column -->
+    <ng-container matColumnDef="post">
+      <th mat-header-cell *matHeaderCellDef> Post </th>
+      <td mat-cell *matCellDef="let element">
+        <div class="row title">
+
+          <ng-container
+            *ngIf="isLoggedIn(); then loggedIn; else loggedOut">
+          </ng-container>
+          <ng-template #loggedIn>
+            <a [routerLink]="['detail', element.id, 'edit']" title="{{element.title}}">{{element.title}}</a>
+          </ng-template>
+          <ng-template #loggedOut>
+            <span>{{element.title}}</span>
+          </ng-template>
+
+        </div>
+        <div class="row mt-2">{{element.body}}</div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>
